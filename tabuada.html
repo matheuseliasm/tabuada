@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Tabuada e Destacar Nomes</title>
+</head>
+<body>
+    <h1>Tabuada</h1>
+    <input type="number" id="numeroInput" placeholder="Digite um número">
+    <div id="tabuada"></div>
+
+    <h1>Destacar Nomes</h1>
+    <input type="text" id="filtroInput" placeholder="Digite um nome">
+    <ul id="listaNomes">
+        <li>João</li>
+        <li>Claudio</li>
+        <li>Marcio</li>
+    </ul>
+
+    <script>
+        const numeroInput = document.getElementById('numeroInput');
+        const tabuadaDiv = document.getElementById('tabuada');
+
+        numeroInput.addEventListener('input', () => {
+            const numero = parseInt(numeroInput.value);
+
+            if (!isNaN(numero)) {
+                let tabuadaHtml = '<h2>Tabuada de ' + numero + '</h2>';
+                for (let i = 1; i <= 10; i++) {
+                    tabuadaHtml += `${numero} x ${i} = ${numero * i}<br>`;
+                }
+                tabuadaDiv.innerHTML = tabuadaHtml;
+            } else {
+                tabuadaDiv.innerHTML = '';
+            }
+        });
+
+        // Destaca nomes dinamicamente
+        const filtroInput = document.getElementById('filtroInput');
+        const listaNomes = document.getElementById('listaNomes');
+
+        filtroInput.addEventListener('input', () => {
+            const filtro = filtroInput.value.toLowerCase();
+
+            Array.from(listaNomes.children).forEach((nomeLi) => {
+                const nome = nomeLi.textContent.toLowerCase();
+                if (nome.includes(filtro)) {
+                    nomeLi.innerHTML = nome.replace(new RegExp(filtro, 'gi'), (match) => `<strong>${match}</strong>`);
+                } else {
+                    nomeLi.innerHTML = nome;
+                }
+            });
+        });
+    </script>
+</body>
+</html>
